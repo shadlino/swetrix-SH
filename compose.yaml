@@ -6,8 +6,9 @@ services:
       - swetrix-api
     environment:
       - BASE_URL=${BASE_URL}
+    # Ny, bättre healthcheck för v5.2.1
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/ping || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1"]
       interval: 20s
       timeout: 10s
       start_period: 60s
@@ -43,8 +44,8 @@ services:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5005/ping || exit 1"]
       interval: 20s
       timeout: 10s
-      start_period: 60s
-      retries: 10
+      start_period: 45s
+      retries: 8
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.swetrix-api.rule=Host(`swetrix.vivemo.se`) && PathPrefix(`/backend`)"
